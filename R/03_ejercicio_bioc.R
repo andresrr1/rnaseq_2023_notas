@@ -16,4 +16,22 @@
 
 ## Esta aprobado en todas las plataformas.
 
-## Su rank es casi el último, 2177/2183. 
+## Su rank es casi el último, 2177/2183.
+
+
+##RgnTX
+
+## Autores: Yue Wang, Jia Meng
+
+## Cita: Wang Y, Meng J (2022). RgnTX: Colocalization analysis of transcriptome elements in the presence of isoform heterogeneity and ambiguity. R package version 1.0.0.
+
+## Codigo que funciona para anotar transcriptomas con splicing alternativo complejo.
+## Soporta la anotacion de elementos del transcriptoma con poca claridad acerca de su isoforma.
+
+## Los desarrolladores contestan de forma irregular.
+
+## Rank: 2141/2183
+
+## Aprobado para todas las plataformas.
+
+## Han tenido un total de 206 descargas desde 102 IPs unicops.
