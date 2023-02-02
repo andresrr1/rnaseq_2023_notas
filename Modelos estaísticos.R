@@ -221,3 +221,50 @@ plotMA(eb_results, coef = 2)
 volcanoplot(eb_results, coef = 2, highlight = 3, names = de_results$gene_name)
 
 de_results[de_results$gene_name %in% c("ZSCAN2", "VASH2", "KIAA0922"), ]
+
+
+##Visualizando genes DE
+
+## Extraer valores de los genes de interés
+exprs_heatmap <- vGene$E[rank(de_results$adj.P.Val) <= 50, ]
+
+## Creemos una tabla con información de las muestras
+## y con nombres de columnas más amigables
+df <- as.data.frame(colData(rse_gene_SRP045638)[, c("prenatal", "sra_attribute.RIN", "sra_attribute.sex")])
+colnames(df) <- c("AgeGroup", "RIN", "Sex")
+
+## Hagamos un heatmap
+library("pheatmap")
+pheatmap(
+  exprs_heatmap,
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = FALSE,
+  annotation_col = df
+)
+
+## Para colores
+library("RColorBrewer")
+
+## Conviertiendo los grupos de edad a colores
+col.group <- df$AgeGroup
+levels(col.group) <- brewer.pal(nlevels(col.group), "Set1")
+
+col.group <- as.character(col.group)
+
+## MDS por grupos de edad
+plotMDS(vGene$E, labels = df$AgeGroup, col = col.group)
+
+
+## Conviertiendo los valores de Sex a colores
+col.sex <- df$Sex
+levels(col.sex) <- brewer.pal(nlevels(col.sex), "Dark2")
+
+col.sex <- as.character(col.sex)
+
+## MDS por sexo
+plotMDS(vGene$E, labels = df$Sex, col = col.sex)
+
+
+
