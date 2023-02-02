@@ -96,10 +96,37 @@ if (interactive()) shiny::runApp(app)
 ##agregue el grupo intercept, sin este la funcion de model matrix agregaria
 ##automaticamente el grupo intercepto y no saldria el grupo batch 1.
 
+## Datos de SRP045638
 
+library("recount3")
 
+options(recount3_url = "https://recount-opendata.s3.amazonaws.com/recount3/release")
 
+human_projects <- available_projects()
 
+rse_gene_SRP045638 <- create_rse(
+  subset(
+    human_projects,
+    project == "SRP045638" & project_type == "data_sources"
+  )
+)
+
+assay(rse_gene_SRP045638, "counts") <- compute_read_counts(rse_gene_SRP045638)
+
+rse_gene_SRP045638$sra.sample_attributes[1:3]
+
+## Se eliminan las partes de informacion que no esta presente en todas 
+## las muestras para alinearlas
+
+rse_gene_SRP045638$sra.sample_attributes <- gsub("dev_stage;;Fetal\\|", "", rse_gene_SRP045638$sra.sample_attributes)
+rse_gene_SRP045638$sra.sample_attributes[1:3]
+
+rse_gene_SRP045638 <- expand_sra_attributes(rse_gene_SRP045638)
+
+colData(rse_gene_SRP045638)[
+  ,
+  grepl("^sra_attribute", colnames(colData(rse_gene_SRP045638)))
+]
 
 
 
